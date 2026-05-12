@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 };
 
 import { AuthProvider } from "@/context/AuthContext";
+import Footer from "@/components/Footer";
 
 export default function RootLayout({
   children,
@@ -21,9 +22,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} antialiased`}>
-      <body className="min-h-screen bg-brand-light text-gray-900">
+      <body className="min-h-screen bg-gray-50/50 text-gray-900 selection:bg-brand-steel selection:text-brand-blue">
         <AuthProvider>
-          {children}
+          <div className="flex flex-col min-h-screen">
+            <main className="flex-grow">
+              {children}
+            </main>
+            <Footer />
+          </div>
         </AuthProvider>
       </body>
     </html>
