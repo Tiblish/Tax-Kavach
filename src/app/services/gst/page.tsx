@@ -1,3 +1,5 @@
+"use client";
+
 import Navbar from '@/components/Navbar';
 import GSTTicker from '@/components/GSTTicker';
 import InquiryForm from '@/components/InquiryForm';
