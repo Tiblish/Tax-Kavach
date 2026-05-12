@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} antialiased`}>
-      <body className="min-h-screen bg-brand-light text-foreground selection:bg-brand-blue/10 selection:text-brand-blue">
+      <body className="min-h-screen bg-warm-100 text-foreground selection:bg-brand-crimson/10 selection:text-brand-crimson">
         <AuthProvider>
           <div className="flex flex-col min-h-screen">
             <main className="flex-grow">

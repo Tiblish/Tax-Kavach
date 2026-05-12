@@ -40,11 +40,11 @@ const TaxInsights = () => {
   }, []);
 
   if (loading) {
-    // Skeleton loader with shimmer animation
+    // Skeleton loader with shimmer animation — warm palette
     return (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="bg-white rounded-3xl border border-slate-100/80 overflow-hidden shadow-elevation-1">
+          <div key={i} className="bg-white rounded-3xl border border-warm-200/80 overflow-hidden shadow-elevation-1">
             <div className="aspect-[16/10] skeleton"></div>
             <div className="p-8 space-y-4">
               <div className="h-3 skeleton w-1/4"></div>
@@ -63,7 +63,7 @@ const TaxInsights = () => {
       {posts.length > 0 ? (
         posts.map((post) => (
           <div key={post.id} className="group flex flex-col h-full">
-            <div className="aspect-[16/10] bg-slate-100 rounded-2xl overflow-hidden mb-6 relative shadow-elevation-1 group-hover:shadow-elevation-2 transition-all duration-500">
+            <div className="aspect-[16/10] bg-warm-100 rounded-2xl overflow-hidden mb-6 relative shadow-elevation-1 group-hover:shadow-elevation-2 transition-all duration-500">
               {post.imageUrl ? (
                 <Image 
                   src={post.imageUrl} 
@@ -73,23 +73,23 @@ const TaxInsights = () => {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-brand-blue/5 to-brand-blue/10 flex items-center justify-center text-brand-blue/20">
+                <div className="w-full h-full bg-gradient-to-br from-brand-crimson/5 to-brand-navy/10 flex items-center justify-center text-brand-crimson/20">
                   <svg className="w-14 h-14" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/>
                   </svg>
                 </div>
               )}
-              <div className="absolute top-4 left-4 bg-brand-blue text-white px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-[0.15em] shadow-lg">
+              <div className="absolute top-4 left-4 bg-brand-crimson text-white px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-[0.15em] shadow-lg">
                 {post.category || 'Article'}
               </div>
             </div>
-            <h3 className="text-xl font-bold text-brand-blue mb-3 group-hover:text-brand-blue-dark transition-colors line-clamp-2 leading-tight">
+            <h3 className="text-xl font-bold text-brand-navy mb-3 group-hover:text-brand-crimson transition-colors line-clamp-2 leading-tight">
               {post.title}
             </h3>
-            <p className="text-brand-grey font-medium line-clamp-3 mb-5 flex-grow text-body leading-relaxed">
+            <p className="text-warm-600 font-medium line-clamp-3 mb-5 flex-grow text-body leading-relaxed">
               {post.content}
             </p>
-            <Link href={`/resources/${post.slug}`} className="inline-flex items-center text-brand-blue text-sm font-bold uppercase tracking-widest hover:gap-3 gap-1 transition-all duration-300">
+            <Link href={`/resources/${post.slug}`} className="inline-flex items-center text-brand-crimson text-sm font-bold uppercase tracking-widest hover:gap-3 gap-1 transition-all duration-300">
               Read Analysis
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 5l7 7-7 7" />
@@ -98,10 +98,10 @@ const TaxInsights = () => {
           </div>
         ))
       ) : (
-        <div className="col-span-3 text-center py-16 bg-white rounded-3xl border-2 border-dashed border-slate-200 shadow-elevation-1">
+        <div className="col-span-3 text-center py-16 bg-white rounded-3xl border-2 border-dashed border-warm-300 shadow-elevation-1">
           <div className="text-5xl mb-4 grayscale opacity-30">📊</div>
-          <p className="text-brand-grey font-bold">Latest tax insights are being updated.</p>
-          <p className="text-brand-steel text-sm mt-1">Check back shortly for expert analysis.</p>
+          <p className="text-warm-700 font-bold">Latest tax insights are being updated.</p>
+          <p className="text-warm-500 text-sm mt-1">Check back shortly for expert analysis.</p>
         </div>
       )}
     </div>

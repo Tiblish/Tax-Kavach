@@ -1,13 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --background: #F8FAFC;
-  --foreground: #0f172a;
+  --background: #FAF8F5;
+  --foreground: #1A1613;
   --surface: #ffffff;
   --surface-elevated: #ffffff;
-  --border-subtle: rgba(148, 163, 184, 0.15);
-  --border-default: rgba(148, 163, 184, 0.25);
-  --shadow-color: 215 28% 17%;
+  --border-subtle: rgba(197, 190, 180, 0.2);
+  --border-default: rgba(197, 190, 180, 0.35);
+  --shadow-color: 30 15% 10%;
+  --brand-crimson: #C0392B;
+  --brand-navy: #1B2A4A;
 }
 
 @theme inline {
@@ -19,16 +21,42 @@
   --color-border-default: var(--border-default);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
+
+  /* ── Warm Neutral Scale ── */
+  --color-warm-50: #FDFCFA;
+  --color-warm-100: #FAF8F5;
+  --color-warm-200: #F0ECE6;
+  --color-warm-300: #E2DDD5;
+  --color-warm-400: #C5BEB4;
+  --color-warm-500: #9C9488;
+  --color-warm-600: #6B6359;
+  --color-warm-700: #4A4339;
+  --color-warm-800: #2D2721;
+  --color-warm-900: #1A1613;
+
+  /* ── Brand Colors ── */
+  --color-brand-crimson: #C0392B;
+  --color-brand-crimson-dark: #96281B;
+  --color-brand-crimson-light: #FADBD8;
+  --color-brand-navy: #1B2A4A;
+  --color-brand-navy-dark: #0F1D35;
+  --color-brand-navy-light: #2C3E5A;
+  --color-brand-blue: #1B2A4A;
+  --color-brand-blue-dark: #0F1D35;
+  --color-brand-grey: #5A6577;
+  --color-brand-light: #FAF8F5;
+  --color-brand-steel: #8896A7;
+  --color-brand-accent: #E67E22;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0f172a;
-    --foreground: #e2e8f0;
-    --surface: #1e293b;
-    --surface-elevated: #334155;
-    --border-subtle: rgba(148, 163, 184, 0.1);
-    --border-default: rgba(148, 163, 184, 0.2);
+    --background: #1A1613;
+    --foreground: #F0ECE6;
+    --surface: #2D2721;
+    --surface-elevated: #4A4339;
+    --border-subtle: rgba(197, 190, 180, 0.1);
+    --border-default: rgba(197, 190, 180, 0.2);
   }
 }
 
@@ -51,7 +79,7 @@ body {
 }
 
 /* ===== SURFACE ELEVATION SYSTEM ===== */
-/* Tiered elevation: Base (gray-50) → Surface (white) → Elevated (white+shadow) */
+/* Tiered elevation: Cream base → White cards → Elevated (white+shadow) */
 
 .surface-base {
   background: var(--background);
@@ -89,31 +117,34 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 1rem 2.5rem;
+  padding: 0.875rem 2rem;
   min-height: 48px; /* 44px+ touch target */
-  background: #003366;
+  background: linear-gradient(135deg, #C0392B 0%, #96281B 100%);
   color: white;
   font-weight: 700;
   font-size: 0.875rem;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
   border-radius: 0.75rem;
   border: none;
   cursor: pointer;
-  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow:
-    0 1px 0 0 rgba(255,255,255,0.1) inset,
-    0 4px 16px rgba(0, 51, 102, 0.25);
-}
-.btn-primary:hover {
-  background: #002244;
-  transform: translateY(-1px);
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow:
     0 1px 0 0 rgba(255,255,255,0.15) inset,
-    0 8px 24px rgba(0, 51, 102, 0.35);
+    0 4px 16px rgba(192, 57, 43, 0.25);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #A93226 0%, #7B2018 100%);
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 0 0 rgba(255,255,255,0.2) inset,
+    0 8px 28px rgba(192, 57, 43, 0.35);
 }
 .btn-primary:active {
   transform: translateY(0) scale(0.98);
+  box-shadow:
+    0 1px 0 0 rgba(255,255,255,0.1) inset,
+    0 2px 8px rgba(192, 57, 43, 0.2);
 }
 
 .btn-secondary {
@@ -121,35 +152,38 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 1rem 2.5rem;
+  padding: 0.875rem 2rem;
   min-height: 48px;
   background: white;
-  color: #003366;
+  color: #1B2A4A;
   font-weight: 700;
   font-size: 0.875rem;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
   border-radius: 0.75rem;
-  border: 2px solid #003366;
+  border: 2px solid #E2DDD5;
   cursor: pointer;
-  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .btn-secondary:hover {
-  background: #EFF6FF;
-  transform: translateY(-1px);
+  background: #FAF8F5;
+  border-color: #C0392B;
+  color: #C0392B;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(192, 57, 43, 0.1);
 }
 .btn-secondary:active {
   transform: translateY(0) scale(0.98);
 }
 
 /* ===== MICRO-INTERACTIONS ===== */
-/* Subtle card lift for Gen Z engagement, kept gentle for seniors */
+/* Subtle card lift for engagement, kept gentle for seniors */
 
 .card-interactive {
   transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .card-interactive:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
   box-shadow:
     0 8px 24px hsl(var(--shadow-color) / 0.08),
     0 24px 48px hsl(var(--shadow-color) / 0.06);
@@ -158,7 +192,7 @@ body {
 /* ===== FOCUS STATES — Accessibility ===== */
 
 :focus-visible {
-  outline: 3px solid #003366;
+  outline: 3px solid #C0392B;
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -166,8 +200,8 @@ body {
 /* ===== TEXT SELECTION ===== */
 
 ::selection {
-  background: rgba(0, 51, 102, 0.15);
-  color: #003366;
+  background: rgba(192, 57, 43, 0.12);
+  color: #96281B;
 }
 
 /* ===== SKELETON ANIMATION ===== */
@@ -178,7 +212,7 @@ body {
 }
 
 .skeleton {
-  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background: linear-gradient(90deg, #F0ECE6 25%, #E2DDD5 50%, #F0ECE6 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s ease-in-out infinite;
   border-radius: 0.5rem;
@@ -219,9 +253,21 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 51, 102, 0.15);
+  background: rgba(192, 57, 43, 0.15);
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 51, 102, 0.3);
+  background: rgba(192, 57, 43, 0.3);
+}
+
+/* ===== SECTION TRANSITIONS ===== */
+/* Smooth gradient dividers between sections */
+
+.section-divider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #E2DDD5, transparent);
 }

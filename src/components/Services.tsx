@@ -35,18 +35,18 @@ const Services = () => {
   ];
 
   return (
-    /* Surface Nesting: brand-light base → white cards = visual separation */
-    <section className="py-24 lg:py-30 bg-brand-light relative">
+    /* Surface Nesting: warm cream base → white cards = visual separation */
+    <section className="py-24 lg:py-30 bg-warm-100 relative">
       {/* Subtle top border for section separation */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+      <div className="section-divider"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <div className="inline-block px-4 py-1.5 bg-brand-blue/5 text-brand-blue text-[10px] font-bold uppercase tracking-[0.2em] rounded-full mb-4">
+          <div className="inline-block px-4 py-1.5 bg-brand-crimson/[0.06] text-brand-crimson text-[10px] font-bold uppercase tracking-[0.2em] rounded-full mb-4">
             What We Do
           </div>
-          <h2 className="text-heading font-black text-brand-blue tracking-tight">The Three Pillars of Excellence</h2>
-          <p className="mt-4 text-brand-grey text-body-lg font-medium max-w-2xl mx-auto">
+          <h2 className="text-heading font-black text-brand-navy tracking-tight">The Three Pillars of Excellence</h2>
+          <p className="mt-4 text-warm-600 text-body-lg font-medium max-w-2xl mx-auto">
             Comprehensive financial and educational solutions designed to navigate the modern regulatory landscape.
           </p>
         </div>
@@ -55,19 +55,19 @@ const Services = () => {
           {pillars.map((pillar, idx) => (
             <div 
               key={idx} 
-              className="group bg-white p-8 lg:p-10 rounded-3xl shadow-elevation-1 hover:shadow-elevation-3 border border-slate-100/80 flex flex-col h-full card-interactive"
+              className="group bg-white p-8 lg:p-10 rounded-3xl shadow-elevation-1 hover:shadow-elevation-3 border border-warm-200/80 flex flex-col h-full card-interactive"
             >
               {/* Icon container with hover state transition */}
-              <div className="w-14 h-14 bg-brand-blue/5 text-brand-blue rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-blue group-hover:text-white transition-all duration-300">
+              <div className="w-14 h-14 bg-brand-crimson/[0.06] text-brand-crimson rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-crimson group-hover:text-white transition-all duration-300">
                 {pillar.icon}
               </div>
-              <h3 className="text-heading-sm font-bold text-brand-blue mb-3">{pillar.title}</h3>
-              <p className="text-brand-grey font-medium mb-6 flex-grow text-body leading-relaxed">
+              <h3 className="text-heading-sm font-bold text-brand-navy mb-3">{pillar.title}</h3>
+              <p className="text-warm-600 font-medium mb-6 flex-grow text-body leading-relaxed">
                 {pillar.description}
               </p>
               <ul className="space-y-3 mb-8">
                 {pillar.items.map((item, i) => (
-                  <li key={i} className="flex items-center text-sm font-semibold text-slate-600">
+                  <li key={i} className="flex items-center text-sm font-semibold text-warm-700">
                     <svg className="w-4 h-4 text-emerald-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                     </svg>
@@ -75,8 +75,8 @@ const Services = () => {
                   </li>
                 ))}
               </ul>
-              {/* Button with affordance: solid border + hover fill for clear interactivity */}
-              <button className="mt-auto w-full py-3.5 border-2 border-slate-200 rounded-xl text-brand-blue font-bold text-sm uppercase tracking-wider group-hover:bg-brand-blue group-hover:text-white group-hover:border-brand-blue transition-all duration-300 min-h-[48px]">
+              {/* Button with affordance: warm border + crimson hover fill */}
+              <button className="mt-auto w-full py-3.5 border-2 border-warm-300 rounded-xl text-brand-navy font-bold text-sm uppercase tracking-wider group-hover:bg-brand-crimson group-hover:text-white group-hover:border-brand-crimson transition-all duration-300 min-h-[48px] hover:shadow-lg">
                 Learn More
               </button>
             </div>

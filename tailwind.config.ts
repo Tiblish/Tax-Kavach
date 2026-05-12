@@ -9,13 +9,38 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // ── New Warm Palette (inspired by ABP Live & professional finance) ──
         brand: {
-          blue: "#003366",       // Deep Royal Blue — primary (WCAG AAA on white)
-          "blue-dark": "#002244", // Hover/Active state
-          grey: "#475569",       // Steel Grey — body text
-          light: "#F8FAFC",      // Off-white base (anti-fatigue)
-          steel: "#94A3B8",      // Muted accent / labels
-          accent: "#0EA5E9",     // Sky blue for micro-highlights
+          // Primary Crimson — authoritative, warm, soothing
+          crimson: "#C0392B",          // Deep warm red — primary accent
+          "crimson-dark": "#96281B",   // Hover/Active darker shade
+          "crimson-light": "#FADBD8", // Tinted background
+
+          // Navy — trust, stability (secondary)
+          navy: "#1B2A4A",            // Dark navy for headings & depth
+          "navy-dark": "#0F1D35",     // Footer, deep surfaces
+          "navy-light": "#2C3E5A",    // Lighter variant
+
+          // Legacy aliases (kept for backward-compatibility)
+          blue: "#1B2A4A",
+          "blue-dark": "#0F1D35",
+          grey: "#5A6577",
+          light: "#FAF8F5",           // Warm cream base
+          steel: "#8896A7",
+          accent: "#E67E22",          // Warm amber accent for micro-highlights
+        },
+        // Warm neutral scale
+        warm: {
+          50: "#FDFCFA",
+          100: "#FAF8F5",
+          200: "#F0ECE6",
+          300: "#E2DDD5",
+          400: "#C5BEB4",
+          500: "#9C9488",
+          600: "#6B6359",
+          700: "#4A4339",
+          800: "#2D2721",
+          900: "#1A1613",
         },
       },
       fontFamily: {
@@ -44,10 +69,10 @@ const config: Config = {
         "5xl": "2.5rem",
       },
       boxShadow: {
-        "elevation-1": "0 1px 3px rgba(0,51,102,0.04), 0 4px 12px rgba(0,51,102,0.06)",
-        "elevation-2": "0 4px 6px rgba(0,51,102,0.04), 0 12px 40px rgba(0,51,102,0.08)",
-        "elevation-3": "0 8px 24px rgba(0,51,102,0.08), 0 24px 48px rgba(0,51,102,0.06)",
-        "elevation-hero": "0 32px 64px -16px rgba(0,51,102,0.15)",
+        "elevation-1": "0 1px 3px rgba(26,22,19,0.04), 0 4px 12px rgba(26,22,19,0.06)",
+        "elevation-2": "0 4px 6px rgba(26,22,19,0.04), 0 12px 40px rgba(26,22,19,0.08)",
+        "elevation-3": "0 8px 24px rgba(26,22,19,0.08), 0 24px 48px rgba(26,22,19,0.06)",
+        "elevation-hero": "0 32px 64px -16px rgba(26,22,19,0.15)",
         "inner-glow": "inset 0 1px 0 0 rgba(255,255,255,0.1)",
       },
       transitionTimingFunction: {

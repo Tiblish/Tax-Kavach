@@ -8,14 +8,12 @@ const InquiryForm = ({ defaultService = 'GST Audit Readiness', type = 'consultan
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', service: defaultService, message: initialMessage });
   const prevMessageRef = useRef(initialMessage);
   
-  // Sync initialMessage prop without cascading setState in an effect.
-  // We compare against a ref to only update when the prop genuinely changes.
-  if (initialMessage !== prevMessageRef.current) {
-    prevMessageRef.current = initialMessage;
-    if (initialMessage) {
+  useEffect(() => {
+    if (initialMessage && initialMessage !== prevMessageRef.current) {
+      prevMessageRef.current = initialMessage;
       setFormData(prev => ({ ...prev, message: initialMessage }));
     }
-  }
+  }, [initialMessage]);
 
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
@@ -32,32 +30,35 @@ const InquiryForm = ({ defaultService = 'GST Audit Readiness', type = 'consultan
       });
       setStatus('Success! Our team will contact you regarding enrollment/consultation.');
       setFormData({ name: '', email: '', phone: '', service: defaultService, message: '' });
-    } catch (_error) {
+    } catch (error) {
+      console.error(error);
       setStatus('Error sending inquiry. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  const inputClasses = "p-4 bg-brand-light border-2 border-slate-200 rounded-xl outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 font-medium text-slate-800 transition-all duration-200 min-h-[52px] text-body placeholder:text-slate-400";
+  const inputClasses = "p-4 bg-warm-50 border-2 border-warm-300 rounded-xl outline-none focus:border-brand-crimson focus:ring-2 focus:ring-brand-crimson/20 font-medium text-warm-800 transition-all duration-200 min-h-[52px] text-body placeholder:text-warm-400";
 
   return (
-    <div className="bg-white p-8 md:p-14 rounded-4xl shadow-elevation-2 border border-slate-100/80">
+    <div className="bg-white p-8 md:p-14 rounded-4xl shadow-elevation-2 border border-warm-200/80">
       <div className="mb-8">
-        <div className="inline-flex items-center px-4 py-1.5 bg-brand-blue/5 text-brand-blue text-[10px] font-bold uppercase tracking-[0.2em] rounded-full mb-4">
-          {type === 'training' ? '🎓 Academy' : '🛡️ Consultancy'}
+        <div className="inline-flex items-center px-4 py-1.5 bg-brand-crimson/[0.06] text-brand-crimson text-[10px] font-bold uppercase tracking-[0.2em] rounded-full mb-4">
+          {type === 'training' ? '🎓 Academy Enrollment' : '🛡️ Expert Consultancy'}
         </div>
-        <h2 className="text-heading font-black text-brand-blue uppercase tracking-tight">
+        <h2 className="text-heading font-black text-brand-navy tracking-tight">
           {type === 'training' ? 'Enroll in the Academy' : 'Request a Compliance Audit'}
         </h2>
-        <p className="text-brand-grey font-medium mt-2 text-body-lg">
-          {type === 'training' ? 'Expert-led practical training designed for professionals.' : 'Get expert representation and litigation-proof strategies.'}
+        <p className="text-warm-600 font-medium mt-2 text-body-lg">
+          {type === 'training' 
+            ? 'Expert-led practical training designed for professionals. Fill in your details and our team will reach out with enrollment information.' 
+            : 'Get expert representation and litigation-proof strategies. Complete the form below and a specialist will contact you within 24 hours.'}
         </p>
       </div>
       
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div className="space-y-1.5">
-          <label htmlFor="name" className="text-xs font-bold text-brand-grey uppercase tracking-wider">Full Name</label>
+          <label htmlFor="name" className="text-xs font-bold text-warm-600 uppercase tracking-wider">Full Name</label>
           <input 
             id="name"
             type="text" placeholder="e.g. Rahul Sharma" required
@@ -66,7 +67,7 @@ const InquiryForm = ({ defaultService = 'GST Audit Readiness', type = 'consultan
           />
         </div>
         <div className="space-y-1.5">
-          <label htmlFor="email" className="text-xs font-bold text-brand-grey uppercase tracking-wider">Email Address</label>
+          <label htmlFor="email" className="text-xs font-bold text-warm-600 uppercase tracking-wider">Email Address</label>
           <input 
             id="email"
             type="email" placeholder="you@company.com" required
@@ -75,7 +76,7 @@ const InquiryForm = ({ defaultService = 'GST Audit Readiness', type = 'consultan
           />
         </div>
         <div className="space-y-1.5">
-          <label htmlFor="phone" className="text-xs font-bold text-brand-grey uppercase tracking-wider">Phone Number</label>
+          <label htmlFor="phone" className="text-xs font-bold text-warm-600 uppercase tracking-wider">Phone Number</label>
           <input 
             id="phone"
             type="tel" placeholder="+91 98XXX XXXXX" required
@@ -85,8 +86,8 @@ const InquiryForm = ({ defaultService = 'GST Audit Readiness', type = 'consultan
         </div>
         
         <div className="space-y-1.5">
-          <label htmlFor="service" className="text-xs font-bold text-brand-grey uppercase tracking-wider">
-            {type === 'training' ? 'Course' : 'Service'}
+          <label htmlFor="service" className="text-xs font-bold text-warm-600 uppercase tracking-wider">
+            {type === 'training' ? 'Select Your Course' : 'Select Service'}
           </label>
           {type === 'training' ? (
             <select 
@@ -114,8 +115,8 @@ const InquiryForm = ({ defaultService = 'GST Audit Readiness', type = 'consultan
         </div>
 
         <div className="md:col-span-2 space-y-1.5">
-          <label htmlFor="message" className="text-xs font-bold text-brand-grey uppercase tracking-wider">
-            {type === 'training' ? 'Focus Areas' : 'How can we help?'}
+          <label htmlFor="message" className="text-xs font-bold text-warm-600 uppercase tracking-wider">
+            {type === 'training' ? 'Focus Areas / Questions' : 'How can we help?'}
           </label>
           <textarea 
             id="message"
@@ -139,7 +140,7 @@ const InquiryForm = ({ defaultService = 'GST Audit Readiness', type = 'consultan
               </svg>
               Processing...
             </span>
-          ) : type === 'training' ? 'Apply for Enrollment' : 'Book My Free Health Check'}
+          ) : type === 'training' ? 'Submit Enrollment Application' : 'Book My Free Health Check'}
         </button>
         {status && (
           <div className={`md:col-span-2 text-center font-bold p-4 rounded-xl text-sm ${status.includes('Success') ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-red-50 text-red-700 border border-red-200'}`}>

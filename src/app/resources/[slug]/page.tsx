@@ -7,10 +7,19 @@ import { collection, query, where, getDocs, limit } from 'firebase/firestore';
 import Navbar from '@/components/Navbar';
 import InquiryForm from '@/components/InquiryForm';
 import Link from 'next/link';
+import Image from 'next/image';
+
+interface Post {
+  title: string;
+  category: string;
+  content: string;
+  imageUrl?: string;
+  createdAt?: { toDate: () => Date };
+}
 
 const BlogPostPage = () => {
   const { slug } = useParams();
-  const [post, setPost] = useState<any>(null);
+  const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -20,11 +29,11 @@ const BlogPostPage = () => {
         const querySnapshot = await getDocs(q);
         
         if (!querySnapshot.empty) {
-          setPost(querySnapshot.docs[0].data());
+          setPost(querySnapshot.docs[0].data() as Post);
         } else {
           // Fallback to searching by ID if slug not found
-          const docRef = await getDocs(query(collection(db, "posts"), limit(1))); // Just a placeholder for ID logic
-          setPost(null); 
+          await getDocs(query(collection(db, "posts"), limit(1))); // Just a placeholder for ID logic
+          setPost(null);
         }
       } catch (err) {
         console.error(err);
@@ -63,8 +72,8 @@ const BlogPostPage = () => {
             {post.title}
           </h1>
           {post.imageUrl && (
-            <div className="rounded-[40px] overflow-hidden shadow-2xl mb-12">
-               <img src={post.imageUrl} alt={post.title} className="w-full h-auto" />
+            <div className="relative w-full h-[400px] rounded-[40px] overflow-hidden shadow-2xl mb-12">
+               <Image src={post.imageUrl} alt={post.title} fill className="object-cover" priority />
             </div>
           )}
         </div>
@@ -103,7 +112,7 @@ const BlogPostPage = () => {
                          Facing an Audit?
                        </h3>
                        <p className="text-white/70 font-medium mb-8 leading-relaxed">
-                         Don't wait for the notice. Get a preemptive health check from our departmental experts.
+                         Don&apos;t wait for the notice. Get a preemptive health check from our departmental experts.
                        </p>
                        <Link href="/services/gst" className="block text-center bg-white text-brand-blue py-4 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-blue-50 transition-all">
                          Book Compliance Check
