@@ -1,26 +1,227 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #F8FAFC;
+  --foreground: #0f172a;
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+  --border-subtle: rgba(148, 163, 184, 0.15);
+  --border-default: rgba(148, 163, 184, 0.25);
+  --shadow-color: 215 28% 17%;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-default: var(--border-default);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0f172a;
+    --foreground: #e2e8f0;
+    --surface: #1e293b;
+    --surface-elevated: #334155;
+    --border-subtle: rgba(148, 163, 184, 0.1);
+    --border-default: rgba(148, 163, 184, 0.2);
   }
+}
+
+/* ===== DESIGN SYSTEM FOUNDATION ===== */
+/* 8px Grid System + 16px Base Font for WCAG readability */
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+/* ===== SURFACE ELEVATION SYSTEM ===== */
+/* Tiered elevation: Base (gray-50) → Surface (white) → Elevated (white+shadow) */
+
+.surface-base {
+  background: var(--background);
+}
+
+.surface-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.5rem;
+}
+
+.surface-elevated {
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.5rem;
+  box-shadow:
+    0 1px 3px hsl(var(--shadow-color) / 0.04),
+    0 4px 12px hsl(var(--shadow-color) / 0.06);
+}
+
+.surface-elevated-lg {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 2rem;
+  box-shadow:
+    0 4px 6px hsl(var(--shadow-color) / 0.04),
+    0 12px 40px hsl(var(--shadow-color) / 0.08);
+}
+
+/* ===== AFFORDANCE: Interactive Elements ===== */
+/* Buttons with "mass" — solid fills + inner shadow for perceived depth */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2.5rem;
+  min-height: 48px; /* 44px+ touch target */
+  background: #003366;
+  color: white;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 0.75rem;
+  border: none;
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    0 1px 0 0 rgba(255,255,255,0.1) inset,
+    0 4px 16px rgba(0, 51, 102, 0.25);
+}
+.btn-primary:hover {
+  background: #002244;
+  transform: translateY(-1px);
+  box-shadow:
+    0 1px 0 0 rgba(255,255,255,0.15) inset,
+    0 8px 24px rgba(0, 51, 102, 0.35);
+}
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2.5rem;
+  min-height: 48px;
+  background: white;
+  color: #003366;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 0.75rem;
+  border: 2px solid #003366;
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-secondary:hover {
+  background: #EFF6FF;
+  transform: translateY(-1px);
+}
+.btn-secondary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ===== MICRO-INTERACTIONS ===== */
+/* Subtle card lift for Gen Z engagement, kept gentle for seniors */
+
+.card-interactive {
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-interactive:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 8px 24px hsl(var(--shadow-color) / 0.08),
+    0 24px 48px hsl(var(--shadow-color) / 0.06);
+}
+
+/* ===== FOCUS STATES — Accessibility ===== */
+
+:focus-visible {
+  outline: 3px solid #003366;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ===== TEXT SELECTION ===== */
+
+::selection {
+  background: rgba(0, 51, 102, 0.15);
+  color: #003366;
+}
+
+/* ===== SKELETON ANIMATION ===== */
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 0.5rem;
+}
+
+/* ===== MARQUEE ===== */
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* ===== ANIMATED ENTRY ===== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ===== SCROLLBAR ===== */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 51, 102, 0.15);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 51, 102, 0.3);
 }

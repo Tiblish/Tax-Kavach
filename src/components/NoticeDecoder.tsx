@@ -2,7 +2,13 @@
 
 import { useState } from 'react';
 
-const noticeData: Record<string, any> = {
+interface NoticeInfo {
+  perspective: string;
+  docs: string[];
+  severity: string;
+}
+
+const noticeData: Record<string, NoticeInfo> = {
   "ASMT-10": {
     perspective: "The department has noticed discrepancies between your GSTR-1, 3B, and GSTR-2B. They are giving you an opportunity to explain before issuing a formal demand.",
     docs: ["GSTR-2B Reconciliation Statement", "Invoices for disputed ITC", "Detailed response explaining mathematical differences"],
@@ -28,62 +34,69 @@ const NoticeDecoder = ({ onSelect }: { onSelect: (notice: string) => void }) => 
   };
 
   return (
-    <div className="bg-white p-10 lg:p-16 rounded-[50px] shadow-2xl border border-gray-100">
-      <div className="text-center mb-12">
-        <div className="inline-block px-4 py-2 bg-red-50 text-red-600 text-[10px] font-black uppercase tracking-[0.2em] rounded mb-4">
+    <div className="bg-white p-8 lg:p-14 rounded-4xl shadow-elevation-2 border border-slate-100/80">
+      <div className="text-center mb-10">
+        <div className="inline-flex items-center px-4 py-2 bg-red-50 text-red-600 text-[10px] font-bold uppercase tracking-[0.2em] rounded-full mb-4 gap-2">
+          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" />
+          </svg>
           Emergency Audit Support
         </div>
-        <h2 className="text-3xl lg:text-4xl font-black text-brand-blue uppercase tracking-tight">
+        <h2 className="text-heading font-black text-brand-blue uppercase tracking-tight">
           Decode Your GST Notice
         </h2>
-        <p className="text-brand-grey font-medium mt-2">Received a letter? Select the notice type to see the departmental logic.</p>
+        <p className="text-brand-grey font-medium mt-2 text-body">Received a letter? Select the notice type to see the departmental logic.</p>
       </div>
 
       <div className="max-w-2xl mx-auto">
+        {/* Select with clear affordance — visible border, large target */}
         <select 
           onChange={handleSelect}
-          className="w-full p-5 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none focus:border-brand-blue font-bold text-brand-blue text-lg mb-10 transition-all cursor-pointer"
+          className="w-full p-4 bg-brand-light border-2 border-slate-200 rounded-2xl outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 font-bold text-brand-blue text-body-lg mb-8 transition-all cursor-pointer min-h-[56px] appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23475569%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_16px_center] bg-no-repeat pr-12"
         >
-          <option value="">-- Select Your Notice Type --</option>
+          <option value="">— Select Your Notice Type —</option>
           {Object.keys(noticeData).map(k => <option key={k} value={k}>{k}</option>)}
         </select>
 
         {selected && (
-          <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
-             <div className="p-8 bg-blue-50 rounded-[30px] border border-blue-100">
-                <h4 className="text-xs font-black text-brand-blue uppercase tracking-widest mb-4 flex items-center">
+          <div className="space-y-8 animate-fade-in-up">
+             {/* Perspective card — elevated surface with brand-blue tinting */}
+             <div className="p-6 lg:p-8 bg-brand-blue/[0.03] rounded-3xl border border-brand-blue/10">
+                <h4 className="text-xs font-bold text-brand-blue uppercase tracking-widest mb-3 flex items-center">
                    <span className="w-2 h-2 bg-brand-blue rounded-full mr-2"></span>
                    The Departmental Perspective
                 </h4>
-                <p className="text-brand-blue font-semibold text-lg leading-relaxed">
-                  "{noticeData[selected].perspective}"
+                <p className="text-brand-blue font-medium text-body-lg leading-relaxed italic">
+                  &ldquo;{noticeData[selected].perspective}&rdquo;
                 </p>
              </div>
 
+             {/* Documents list with numbered badges */}
              <div>
-                <h4 className="text-xs font-black text-brand-grey uppercase tracking-widest mb-6">
+                <h4 className="text-xs font-bold text-brand-grey uppercase tracking-widest mb-5">
                   Top 3 Documents Required Immediately
                 </h4>
-                <div className="grid grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 gap-3">
                    {noticeData[selected].docs.map((doc: string, i: number) => (
-                     <div key={i} className="flex items-center p-4 bg-gray-50 rounded-xl border border-gray-100">
-                        <span className="w-6 h-6 bg-brand-blue text-white text-[10px] flex items-center justify-center rounded-full mr-4 font-black">
+                     <div key={i} className="flex items-center p-4 bg-brand-light rounded-xl border border-slate-100 hover:border-slate-200 transition-colors">
+                        <span className="w-7 h-7 bg-brand-blue text-white text-[11px] flex items-center justify-center rounded-lg mr-4 font-bold flex-shrink-0">
                           {i+1}
                         </span>
-                        <span className="font-bold text-brand-grey">{doc}</span>
+                        <span className="font-semibold text-slate-700 text-body">{doc}</span>
                      </div>
                    ))}
                 </div>
              </div>
 
-             <div className="pt-6">
+             {/* CTA — btn-primary pattern for maximum affordance */}
+             <div className="pt-4">
                 <button 
                   onClick={() => onSelect(selected)}
-                  className="w-full bg-brand-blue text-white py-6 rounded-2xl font-black text-lg uppercase tracking-[0.1em] hover:bg-blue-900 transition-all shadow-2xl shadow-blue-100"
+                  className="btn-primary w-full !py-5 !text-base"
                 >
                    Get Expert Help with this {selected}
                 </button>
-                <p className="text-center text-[10px] font-black text-red-500 uppercase tracking-widest mt-6">
+                <p className="text-center text-[10px] font-bold text-red-500 uppercase tracking-widest mt-5">
                   Severity: {noticeData[selected].severity}
                 </p>
              </div>
