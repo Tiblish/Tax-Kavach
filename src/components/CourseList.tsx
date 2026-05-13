@@ -50,7 +50,7 @@ const CourseList = () => {
     return (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="bg-white rounded-3xl p-10 border border-warm-200/80 shadow-elevation-1 space-y-4">
+          <div key={i} className="bg-surface rounded-3xl p-10 border border-border-subtle shadow-elevation-1 space-y-4">
             <div className="h-6 skeleton w-1/3"></div>
             <div className="h-8 skeleton w-2/3"></div>
             <div className="h-16 skeleton w-full"></div>
@@ -96,7 +96,7 @@ const CourseList = () => {
       )}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {displayCourses.map((course, idx) => (
-          <div key={idx} className="group bg-white p-8 lg:p-10 rounded-3xl border border-warm-200/80 shadow-elevation-1 card-interactive flex flex-col">
+          <div key={idx} className="group bg-surface p-8 lg:p-10 rounded-3xl border border-border-subtle shadow-elevation-1 card-interactive flex flex-col">
             <div className="text-[10px] font-bold text-brand-crimson uppercase tracking-[0.2em] mb-4 bg-brand-crimson/[0.06] px-3 py-1.5 rounded-full w-fit">
               {course.level}
             </div>

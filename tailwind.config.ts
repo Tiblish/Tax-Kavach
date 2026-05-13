@@ -9,6 +9,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        surface: "var(--surface)",
+        "surface-elevated": "var(--surface-elevated)",
+        "border-subtle": "var(--border-subtle)",
+        "border-default": "var(--border-default)",
         // ── New Warm Palette (inspired by ABP Live & professional finance) ──
         brand: {
           // Primary Crimson — authoritative, warm, soothing
@@ -45,6 +51,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
+        heading: ["var(--font-outfit)", "Outfit", "system-ui", "sans-serif"],
       },
       fontSize: {
         // WCAG-friendly scale: 16px base, 1.25 ratio

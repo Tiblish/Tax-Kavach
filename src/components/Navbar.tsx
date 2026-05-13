@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
@@ -66,8 +64,9 @@ const Navbar = () => {
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    document.body.style.overflow = mobileOpen ? 'hidden' : originalStyle;
+    return () => { document.body.style.overflow = originalStyle; };
   }, [mobileOpen]);
 
   const navLinks = [
@@ -83,35 +82,35 @@ const Navbar = () => {
     <>
       <nav
         id="main-navbar"
-        className={`fixed w-full z-50 transition-all duration-300 ${
+        className={`fixed w-full z-50 transition-all duration-500 ${
           scrolled
-            ? 'bg-white/95 backdrop-blur-xl shadow-[0_2px_24px_rgba(0,0,0,0.06)] border-b border-warm-200/60'
-            : 'bg-white/80 backdrop-blur-xl border-b border-warm-200/40'
+            ? 'py-3 bg-surface/90 backdrop-blur-xl shadow-elevation-1 border-b border-border-subtle'
+            : 'py-5 bg-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-[72px] items-center">
+          <div className="flex justify-between items-center">
             {/* Logo + Brand */}
-            <div className="flex-shrink-0 flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-brand-crimson to-brand-crimson-dark rounded-xl flex items-center justify-center text-white shadow-md overflow-hidden group cursor-pointer transition-transform duration-200 hover:scale-105 active:scale-95">
+            <div className="flex-shrink-0 flex items-center gap-4 group">
+              <div className="w-12 h-12 bg-gradient-to-br from-brand-crimson to-brand-crimson-dark rounded-2xl flex items-center justify-center text-white shadow-lg shadow-brand-crimson/20 overflow-hidden cursor-pointer transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 active:scale-95">
                 <Link href="/" aria-label="Tax Kavach Home">
-                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                    </svg>
                 </Link>
               </div>
-              <Link href="/" className="text-lg font-black tracking-tight text-warm-900">
+              <Link href="/" className="text-xl font-black tracking-tight text-brand-navy font-heading">
                 TAX <span className="text-brand-crimson">KAVACH</span>
               </Link>
             </div>
             
             {/* Desktop Navigation Links */}
-            <div className="hidden lg:flex items-center space-x-1">
+            <div className="hidden lg:flex items-center space-x-2">
               {navLinks.map((link) => (
                 <Link 
                   key={link.name} 
                   href={link.href} 
-                  className="relative text-[13px] font-semibold text-warm-600 hover:text-brand-crimson transition-colors duration-200 tracking-wide px-4 py-2 rounded-lg hover:bg-brand-crimson/5"
+                  className="relative text-sm font-bold text-warm-700 hover:text-brand-crimson transition-all duration-300 px-5 py-2.5 rounded-xl hover:bg-brand-crimson/[0.04]"
                 >
                   {link.name}
                 </Link>
@@ -119,18 +118,18 @@ const Navbar = () => {
             </div>
 
             {/* CTA + Mobile Hamburger */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               <Link 
                 href="/login" 
-                className="hidden sm:inline-flex text-xs font-semibold text-warm-500 hover:text-brand-crimson tracking-wider transition-colors duration-200 py-2 px-3 rounded-lg hover:bg-warm-50"
+                className="hidden sm:inline-flex text-[10px] font-black text-warm-400 hover:text-brand-crimson tracking-[0.2em] uppercase transition-all duration-300 py-2 px-4"
               >
                 Admin
               </Link>
               <Link 
                 href="/services/gst#contact"
-                className="hidden sm:inline-flex btn-primary text-xs !px-5 !py-2.5"
+                className="hidden sm:inline-flex btn-primary !text-xs !px-6 !py-3 shadow-elevation-1 hover:shadow-elevation-2"
               >
-                Consult an Expert
+                Consult Now
               </Link>
 
               {/* Hamburger Button — visible below lg */}
@@ -139,12 +138,12 @@ const Navbar = () => {
                 aria-label="Toggle navigation menu"
                 aria-expanded={mobileOpen}
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="lg:hidden relative w-10 h-10 flex items-center justify-center rounded-xl hover:bg-warm-100 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-crimson"
+                className="lg:hidden relative w-12 h-12 flex items-center justify-center rounded-2xl bg-warm-100 hover:bg-warm-200 transition-colors focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-crimson/20"
               >
-                <div className="w-5 h-4 flex flex-col justify-between">
-                  <span className={`block h-0.5 w-full bg-warm-700 rounded-full transition-all duration-300 origin-center ${mobileOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
-                  <span className={`block h-0.5 w-full bg-warm-700 rounded-full transition-all duration-300 ${mobileOpen ? 'opacity-0 scale-x-0' : ''}`} />
-                  <span className={`block h-0.5 w-full bg-warm-700 rounded-full transition-all duration-300 origin-center ${mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
+                <div className="w-6 h-5 flex flex-col justify-between">
+                  <span className={`block h-0.5 w-full bg-brand-navy rounded-full transition-all duration-300 origin-center ${mobileOpen ? 'rotate-45 translate-y-[9px]' : ''}`} />
+                  <span className={`block h-0.5 w-full bg-brand-navy rounded-full transition-all duration-300 ${mobileOpen ? 'opacity-0 scale-x-0' : ''}`} />
+                  <span className={`block h-0.5 w-full bg-brand-navy rounded-full transition-all duration-300 origin-center ${mobileOpen ? '-rotate-45 -translate-y-[9px]' : ''}`} />
                 </div>
               </button>
             </div>
@@ -153,48 +152,46 @@ const Navbar = () => {
       </nav>
 
       {/* Mobile Overlay + Drawer */}
-      {/* Backdrop */}
       <div
-        className={`fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${
+        className={`fixed inset-0 z-[60] bg-brand-navy/20 backdrop-blur-md transition-opacity duration-500 lg:hidden ${
           mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setMobileOpen(false)}
         aria-hidden="true"
       />
       
-      {/* Slide-out panel */}
       <div
         ref={menuRef}
         id="mobile-menu-panel"
-        className={`fixed top-0 right-0 z-50 h-full w-[85%] max-w-sm bg-white shadow-2xl transition-transform duration-300 ease-out lg:hidden ${
+        className={`fixed top-0 right-0 z-[70] h-full w-full max-w-[320px] glass-morphism shadow-2xl transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) lg:hidden ${
           mobileOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         {/* Panel header */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-warm-100">
-          <span className="text-base font-black text-warm-900 tracking-tight">
+        <div className="flex items-center justify-between px-8 py-7 border-b border-warm-200/30">
+          <span className="text-lg font-black text-brand-navy tracking-tight font-heading">
             TAX <span className="text-brand-crimson">KAVACH</span>
           </span>
           <button
             aria-label="Close menu"
             onClick={() => setMobileOpen(false)}
-            className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-warm-100 transition-colors"
+            className="w-10 h-10 flex items-center justify-center rounded-2xl bg-warm-100 hover:bg-warm-200 transition-colors"
           >
-            <svg className="w-5 h-5 text-warm-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            <svg className="w-6 h-6 text-brand-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
         {/* Navigation links */}
-        <nav className="px-4 py-6 space-y-1">
+        <nav className="px-6 py-10 space-y-2">
           {navLinks.map((link, idx) => (
             <Link
               key={link.name}
               href={link.href}
               onClick={() => setMobileOpen(false)}
-              className="flex items-center px-4 py-3.5 text-[15px] font-semibold text-warm-700 hover:text-brand-crimson hover:bg-brand-crimson/5 rounded-xl transition-all duration-200"
-              style={{ animationDelay: `${idx * 50}ms` }}
+              className={`flex items-center px-6 py-4 text-[17px] font-black text-brand-navy hover:text-brand-crimson hover:bg-brand-crimson/[0.04] rounded-2xl transition-all duration-300 opacity-0 translate-x-4 ${mobileOpen ? 'opacity-100 translate-x-0' : ''}`}
+              style={{ transitionDelay: `${150 + idx * 50}ms` }}
             >
               {link.name}
             </Link>
@@ -202,20 +199,20 @@ const Navbar = () => {
         </nav>
 
         {/* Bottom CTA */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-warm-100 bg-warm-50/50 space-y-3">
+        <div className={`absolute bottom-0 left-0 right-0 p-8 border-t border-warm-200/30 space-y-4 opacity-0 translate-y-4 transition-all duration-500 ${mobileOpen ? 'opacity-100 translate-y-0' : ''}`} style={{ transitionDelay: '500ms' }}>
           <Link
             href="/services/gst#contact"
             onClick={() => setMobileOpen(false)}
-            className="btn-primary w-full text-center text-sm !py-3.5"
+            className="btn-primary w-full text-center text-sm font-black !py-4 shadow-elevation-2"
           >
-            Consult an Expert
+            Book Free Audit
           </Link>
           <Link
             href="/login"
             onClick={() => setMobileOpen(false)}
-            className="block text-center text-xs font-semibold text-warm-500 hover:text-brand-crimson py-2 transition-colors"
+            className="block text-center text-[10px] font-black text-warm-400 hover:text-brand-crimson py-2 uppercase tracking-[0.2em] transition-colors"
           >
-            Admin Login
+            Portal Access
           </Link>
         </div>
       </div>
